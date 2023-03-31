@@ -23,6 +23,10 @@ public class VideogiocoService {
 		return vidRepo.findById(id);
 	}
 	
+	public Optional<Videogioco> ottieniDaCodiceControllo(String codice) {
+		return vidRepo.findByCodiceControllo(codice);
+	}
+	
 	public List<Videogioco> ottieniTutti() {
 		return vidRepo.findAll();
 	}

@@ -1,0 +1,16 @@
+<section class="musica">
+  <div class="card mx-auto mx-sm-3 my-3 d-sm-inline-block w-md-25 bg-primary"  *ngFor="let musica of musiche" style="width: 18rem;">
+    <img class="card-img-top" src={{musica?.immagine}} alt="Immagine Disco">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">{{musica?.titolo}}</li>
+      <li class="list-group-item">{{musica?.autore}}</li>
+      <li class="list-group-item">{{musica?.editore}}</li>
+      <li class="list-group-item">{{musica?.formatoDisco}}</li>
+      <li class="list-group-item">{{musica?.prezzo}}€</li>
+      <li class="list-group-item" *ngIf="token"><button (click)="aggiungiAlCarrello(musica.codiceControllo)" class="btn btn-primary mt-2">
+        Aggiungi al carrello</button><button (click)="aggiungiAllaListaPreferiti(musica.codiceControllo)" class="btn btn-primary mt-2">
+          Aggiungi ai preferiti</button></li>
+    </ul>
+  </div>
+</section>
+<app-navbar></app-navbar>

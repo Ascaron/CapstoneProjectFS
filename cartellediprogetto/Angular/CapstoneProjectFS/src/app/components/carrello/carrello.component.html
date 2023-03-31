@@ -1,0 +1,7 @@
+<section class="carrello mt-5">
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let carrelloProdotto of carrelloProdotti">
+      {{carrelloProdotto?.titolo}}&nbsp; &nbsp; &nbsp;{{carrelloProdotto?.prezzo}}€</li>
+  </ul>
+</section>
+<app-navbar></app-navbar>

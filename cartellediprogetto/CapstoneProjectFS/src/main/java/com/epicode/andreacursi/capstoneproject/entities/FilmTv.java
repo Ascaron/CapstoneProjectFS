@@ -36,5 +36,8 @@ public class FilmTv {
 	private String casaProduzione;
 	@Enumerated(EnumType.STRING)
 	private Formato formato;
+	private String codiceControllo;
+	private int quantita;
+	private String immagine;
 	
 }

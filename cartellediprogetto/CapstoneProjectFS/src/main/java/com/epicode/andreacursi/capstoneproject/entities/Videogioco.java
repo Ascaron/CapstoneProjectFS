@@ -34,5 +34,8 @@ public class Videogioco {
 	private String editore;
 	@Enumerated(EnumType.STRING)
 	private Piattaforma piattaforma;
+	private String codiceControllo;
+	private int quantita;
+	private String immagine;
 	
 }

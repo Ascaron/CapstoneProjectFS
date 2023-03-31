@@ -1,0 +1,14 @@
+<section class="accessoConCredenziali mx-auto mt-5 w-25">
+  <form [formGroup]="form" (ngSubmit)="login()">
+    <div class="form-group">
+      <label for="inputUsername">Username</label>
+      <input type="text" class="form-control" id="inputUsername" formControlName="inputUsername" placeholder="Inserisci il tuo username">
+    </div>
+    <div class="form-group">
+      <label for="inputPassword">Password</label>
+      <input type="password" class="form-control" id="inputPassword" formControlName="inputPassword" placeholder="Inserisci la tua password">
+    </div>
+    <button type="submit" class="btn btn-primary mt-2" [ngClass]="{'disabled':form.invalid}">Accedi</button>
+  </form>
+</section>
+<app-navbar></app-navbar>

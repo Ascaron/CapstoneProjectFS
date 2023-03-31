@@ -31,9 +31,6 @@ public class JwtUtils {
 		Date now = new Date();
 		Date exp = new Date((now).getTime() + jwtExpirationMs);
 		userPrincipal.setExpirationTime(exp);
-		System.out.println(Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(now)
-				.setExpiration(exp)
-				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact());
 		return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(now)
 				.setExpiration(exp)
 				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();

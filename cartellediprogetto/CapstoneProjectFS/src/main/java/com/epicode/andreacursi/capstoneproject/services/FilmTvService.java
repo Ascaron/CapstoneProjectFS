@@ -23,6 +23,10 @@ public class FilmTvService {
 		return filRepo.findById(id);
 	}
 	
+	public Optional<FilmTv> ottieniDaCodiceControllo(String codice) {
+		return filRepo.findByCodiceControllo(codice);
+	}
+	
 	public List<FilmTv> ottieniTutti() {
 		return filRepo.findAll();
 	}

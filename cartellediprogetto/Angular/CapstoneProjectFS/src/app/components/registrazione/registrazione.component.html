@@ -1,0 +1,36 @@
+<section class="registrazioneUtente mx-auto mt-5 w-25">
+  <form [formGroup]="form" (ngSubmit)="registra()">
+    <div class="form-group">
+      <label for="inputNome">Nome</label>
+      <input type="text" class="form-control" id="inputNome" formControlName="inputNome" placeholder="Inserisci il tuo nome">
+    </div>
+    <div class="form-group">
+      <label for="inputCognome">Cognome</label>
+      <input type="text" class="form-control" id="inputCognome" formControlName="inputCognome" placeholder="Inserisci il tuo cognome">
+    </div>
+    <div class="form-group">
+      <label for="inputUsername">Username</label>
+      <input type="text" class="form-control" id="inputUsername" formControlName="inputUsername" placeholder="Inserisci il tuo username">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail">Email</label>
+      <input type="email" class="form-control" id="inputEmail" formControlName="inputEmail" aria-describedby="emailHelp"
+      placeholder="Inserisci la tua email">
+    </div>
+    <div>
+      <label for="inputDataNascita">Data di nascita</label>
+      <input type="date" class="form-control" id="inputDataNascita" formControlName="inputDataNascita">
+    </div>
+    <div class="form-group">
+      <label for="inputPortafoglio">Portafoglio</label>
+      <input type="number" class="form-control" id="inputPortafoglio" formControlName="inputPortafoglio" placeholder="Carica soldi sul tuo account">
+      <span>€</span>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword">Password</label>
+      <input type="password" class="form-control" id="inputPassword" formControlName="inputPassword" placeholder="Inserisci la tua password">
+    </div>
+    <button type="submit" class="btn btn-primary mt-2" [ngClass]="{'disabled':form.invalid}">Registrati</button>
+  </form>
+</section>
+<app-navbar></app-navbar>

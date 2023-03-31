@@ -1,0 +1,16 @@
+<section class="videogioco">
+  <div class="card mx-auto mx-sm-3 my-3 d-sm-inline-block w-md-25 bg-primary"  *ngFor="let videogioco of videogiochi" style="width: 18rem;">
+    <img class="card-img-top" src={{videogioco?.immagine}} alt="Immagine Videogioco">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">{{videogioco?.titolo}}</li>
+      <li class="list-group-item">{{videogioco?.piattaforma}}</li>
+      <li class="list-group-item">{{videogioco?.casaSviluppo}}</li>
+      <li class="list-group-item">{{videogioco?.editore}}</li>
+      <li class="list-group-item">{{videogioco?.prezzo}}€</li>
+      <li class="list-group-item" *ngIf="token"><button (click)="aggiungiAlCarrello(videogioco.codiceControllo)" class="btn btn-primary mt-2">
+        Aggiungi al carrello</button><button (click)="aggiungiAllaListaPreferiti(videogioco.codiceControllo)" class="btn btn-primary mt-2">
+          Aggiungi ai preferiti</button></li>
+    </ul>
+  </div>
+</section>
+<app-navbar></app-navbar>

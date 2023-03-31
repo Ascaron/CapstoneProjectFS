@@ -1,6 +1,5 @@
 package com.epicode.andreacursi.capstoneproject.entities;
 
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,10 +34,14 @@ public class Utente {
 	private String password;
 	private String nome;
 	private String cognome;
-	private LocalDate dataNascita;
+	private String dataNascita;
 	private Boolean attivo;
-//	private ArticoloPreferito articoloPreferito;
-//	private Carrello carrello;
+	@OneToOne
+	private ListaPreferiti listaPreferiti;
+	@OneToOne
+	private Carrello carrello;
+	@ManyToMany
+	private Set<RecordAcquisti> recordAcquisti;
 	@ManyToMany
 	private Set<Ruolo> ruoli=new HashSet<>();
 	private double portafoglio;

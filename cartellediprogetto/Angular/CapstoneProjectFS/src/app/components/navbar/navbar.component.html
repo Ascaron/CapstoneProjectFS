@@ -1,15 +1,15 @@
-<header class="position-fixed top-0">
-  <nav class="navbar navbar-expand-lg bg-light">
+<header class="position-fixed top-0 w-100">
+  <nav class="navbar navbarSuperiore navbar-expand-md">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <h1 id="nomeSito" class="mb-0">CEX-CLONE</h1>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span><i class="fa-solid fa-gamepad"></i></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" [routerLink]="['/']">Home</a>
+            <a class="nav-link" aria-current="page" [routerLink]="['/']">Home</a>
           </li>
           <li class="nav-item" >
             <a class="nav-link" [routerLink]="['/login']" *ngIf="!token">Login</a>
@@ -23,6 +23,12 @@
           <li class="nav-item" >
             <a class="nav-link" [routerLink]="['/listapreferiti']" *ngIf="token">Lista dei preferiti</a>
           </li>
+          <li class="nav-item" >
+            <a class="nav-link" [routerLink]="['/datiUtente']" *ngIf="token">Il tuo spazio personale</a>
+          </li>
+          <li class="nav-item" >
+            <button class="btn btn-primary" (click)="logout()" *ngIf="token">Logout</button>
+          </li>
         </ul>
       </div>
     </div>
@@ -30,9 +36,9 @@
 </header>
 
 <footer class="position-fixed bottom-0">
-  <nav class="navbar navbar-expand-lg bg-light">
+  <nav class="navbar navbarInferiore">
     <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="collapse navbar-collapse" id="navbarNavInferiore">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/filmtv']">Film e TV</a>
@@ -45,9 +51,9 @@
           </li>
         </ul>
       </div>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavInferiore"
+        aria-controls="navbarNavInferiore" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fa-solid fa-gamepad"></i></span>
       </button>
     </div>
   </nav>

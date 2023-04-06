@@ -5,25 +5,19 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.epicode.andreacursi.capstoneproject.entities.Carrello;
-import com.epicode.andreacursi.capstoneproject.entities.FilmTv;
 import com.epicode.andreacursi.capstoneproject.entities.ListaPreferiti;
-import com.epicode.andreacursi.capstoneproject.entities.Musica;
-import com.epicode.andreacursi.capstoneproject.entities.ProdottoCarrello;
 import com.epicode.andreacursi.capstoneproject.entities.ProdottoListaPreferiti;
 import com.epicode.andreacursi.capstoneproject.entities.Utente;
-import com.epicode.andreacursi.capstoneproject.entities.Videogioco;
-import com.epicode.andreacursi.capstoneproject.model.AggiungiProdotto;
 import com.epicode.andreacursi.capstoneproject.services.FilmTvService;
 import com.epicode.andreacursi.capstoneproject.services.ListaPreferitiService;
 import com.epicode.andreacursi.capstoneproject.services.MusicaService;
@@ -55,12 +49,14 @@ public class ListaPreferitiController {
 	ProdottoListaPreferitiService proLiPrSe;
 
 	@GetMapping("/contenuto/id={id}")
+	@PreAuthorize("hasRole('USER')")
 	public ListaPreferiti ottieniContenutoListaPreferiti(@PathVariable int id) {
 		int listaPreferitiId = uteSe.ottieniDaId(id).get().getListaPreferiti().getId();
 		return lisSe.ottieniDaId(listaPreferitiId).get();
 	}
 
 	@PostMapping("/aggiungiallalistapreferiti")
+	@PreAuthorize("hasRole('USER')")
 	public void aggiungiAllaListaPreferiti(@RequestParam String id, @RequestParam String codice) {
 		int idUtente = Integer.parseInt(id);
 		List<ProdottoListaPreferiti> prodotti = new ArrayList<>();
@@ -119,6 +115,7 @@ public class ListaPreferitiController {
 	}
 
 	@DeleteMapping("/rimuovidallalistapreferiti")
+	@PreAuthorize("hasRole('USER')")
 	public void eliminaDallaListaPreferiti(@RequestParam int id, @RequestParam String codice) {
 		int listaPreferitiId = uteSe.ottieniDaId(id).get().getListaPreferiti().getId();
 		ListaPreferiti listaPreferiti = lisSe.ottieniDaId(listaPreferitiId).get();

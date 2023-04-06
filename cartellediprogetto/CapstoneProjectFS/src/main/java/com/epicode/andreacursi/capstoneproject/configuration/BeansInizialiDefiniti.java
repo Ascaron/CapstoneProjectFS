@@ -23,24 +23,12 @@ public class BeansInizialiDefiniti {
 	// Beans per Ruolo
 	@Bean
 	public Ruolo ru1() {
-		return Ruolo.builder().tipoRuolo(TipoRuolo.ADMIN).build();
+		return Ruolo.builder().tipoRuolo(TipoRuolo.ROLE_ADMIN).build();
 	}
 
 	@Bean
 	public Ruolo ru2() {
-		return Ruolo.builder().tipoRuolo(TipoRuolo.USER).build();
-	}
-
-	// Beans per Utente Admin
-	@Bean
-	public Utente ut1() {
-		return Utente.builder().username("mario").email("mario@rossi.it").password("mario").nome("Mario")
-				.cognome("Rossi").dataNascita("1995-01-24").attivo(true).ruoli(new HashSet<>() {
-					{
-						add(ru1());
-						add(ru2());
-					}
-				}).portafoglio(200).build();
+		return Ruolo.builder().tipoRuolo(TipoRuolo.ROLE_USER).build();
 	}
 
 	// Beans per Videogioco
@@ -262,10 +250,32 @@ public class BeansInizialiDefiniti {
 		return Carrello.builder().build();
 	}
 	
+	@Bean 
+	public Carrello ca2() {
+		return Carrello.builder().build();
+	}
+	
 	// Beans per ListaPreferiti
 	@Bean 
 	public ListaPreferiti li1() {
 		return ListaPreferiti.builder().build();
+	}
+	
+	@Bean 
+	public ListaPreferiti li2() {
+		return ListaPreferiti.builder().build();
+	}
+	
+	// Beans per Utente Admin
+	@Bean
+	public Utente ut1() {
+		return Utente.builder().username("mario").email("mario@rossi.it").password("mario").nome("Mario")
+				.cognome("Rossi").dataNascita("1995-01-24").attivo(true).ruoli(new HashSet<>() {
+					{
+						add(ru1());
+						add(ru2());
+					}
+				}).portafoglio(200).carrello(ca1()).listaPreferiti(li1()).build();
 	}
 	
 	// Beans per utente User
@@ -276,6 +286,6 @@ public class BeansInizialiDefiniti {
 					{
 						add(ru2());
 					}
-				}).portafoglio(100).carrello(ca1()).listaPreferiti(li1()).build();
+				}).portafoglio(100).carrello(ca2()).listaPreferiti(li2()).build();
 	}
 }

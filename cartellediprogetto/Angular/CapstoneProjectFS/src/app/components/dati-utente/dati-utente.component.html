@@ -1,0 +1,131 @@
+<section id="datiUtente" class="utenteDaModificare">
+  <div class="mx-auto bloccoForm" *ngFor="let utente of utenti">
+
+    <form [formGroup]="form2" class="mb-5">
+      <h3 class="text-primary fw-bold">Ricarica il portafoglio</h3>
+      <div class="form-group">
+        <label for="ricaricaSoloPortafoglio" class="form-label">Ricarica portafoglio</label>
+        <input type="number" class="form-control" id="ricaricaSoloPortafoglio" formControlName="ricaricaSoloPortafoglio"
+          placeholder="Carica soldi sul tuo account" required>
+      </div>
+      <button type="submit" class="btn btn-primary mt-2" (click)="invia2()">Ricarica</button>
+    </form>
+
+    <h3 class="datiOriginali text-primary fw-bold">I tuoi dati utente</h3>
+    <h3 class="nuoviDati rimuoviForm text-primary fw-bold">Inserisci i tuoi nuovi dati</h3>
+
+    <div class="form-group datiOriginali">
+      <label for="campo1" class="form-label">Nome</label>
+      <input type="text" class="form-control" id="campo1" value="{{utente.nome}}" disabled>
+    </div>
+    <div class="form-group datiOriginali">
+      <label for="campo2" class="form-label">Cognome</label>
+      <input type="text" class="form-control" id="campo2" value="{{utente.cognome}}" disabled>
+    </div>
+    <div class="form-group datiOriginali">
+      <label for="campo3" class="form-label">Username</label>
+      <input type="text" class="form-control" value="{{utente.username}}" id="campo3" disabled>
+    </div>
+    <div class="form-group datiOriginali">
+      <label for="campo4" class="form-label">Email</label>
+      <input type="email" class="form-control" value="{{utente.email}}" id="campo4" disabled>
+    </div>
+    <div class="form-group datiOriginali">
+      <label for="campo5" class="form-label">Data di nascita</label>
+      <input type="date" class="form-control" value="{{utente.dataNascita}}" id="campo5" disabled>
+    </div>
+    <div class="form-group datiOriginali">
+      <label for="campo6" class="form-label">Portafoglio</label>
+      <input type="number" class="form-control" value="{{utente.portafoglio}}" id="campo6" disabled>
+    </div>
+    <div class="form-group datiOriginali">
+      <label for="campo7" class="form-label">Password</label>
+        <input type="password" class="form-control" value="{{utente.password}}" id="campo7" #campo7 disabled>
+        <p class="btn btn-light pulsanteOcchio" (click)="campo7.type=campo7.type=='password'?'text':'password'"
+          (click)="occhio1()">
+          <i class="fa-regular fa-eye-slash occhio1"></i></p>
+    </div>
+
+    <form [formGroup]="form1" class="nuoviDati rimuoviForm">
+      <div class="form-group">
+        <label for="inputNome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="inputNome" formControlName="inputNome"
+          placeholder="Inserisci il tuo nome" required>
+      </div>
+      <div class="form-group">
+        <label for="inputCognome" class="form-label">Cognome</label>
+        <input type="text" class="form-control" id="inputCognome" formControlName="inputCognome"
+          placeholder="Inserisci il tuo cognome" required>
+      </div>
+      <div class="form-group">
+        <label for="inputUsername" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputUsername" formControlName="inputUsername"
+          placeholder="Inserisci il tuo username" required>
+      </div>
+      <div class="form-group">
+        <label for="inputEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" id="inputEmail" formControlName="inputEmail"
+          aria-describedby="emailHelp" placeholder="Inserisci la tua email" required>
+      </div>
+      <div>
+        <label for="inputDataNascita" class="form-label">Data di nascita</label>
+        <input type="date" class="form-control" id="inputDataNascita" formControlName="inputDataNascita" required>
+      </div>
+      <div class="form-group">
+        <label for="inputPortafoglio" class="form-label">Ricarica portafoglio</label>
+        <input type="number" class="form-control" id="inputPortafoglio" formControlName="inputPortafoglio"
+          placeholder="Carica soldi sul tuo account" required>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="inputPassword" formControlName="inputPassword"
+            placeholder="Inserisci la tua password" #inputPassword required>
+          <p class="btn btn-light pulsanteOcchio" (click)="inputPassword.type=inputPassword.type=='password'?'text':'password'"
+            (click)="occhio2()">
+            <i class="fa-regular fa-eye-slash occhio2"></i></p>
+      </div>
+      <div class="form-group">
+        <label for="inputCheckPassword" class="form-label">Controllo Password</label>
+          <input type="password" class="form-control" id="inputCheckPassword" formControlName="inputCheckPassword"
+            placeholder="Reinserisci la tua password" #inputCheckPassword required>
+          <p class="btn btn-light pulsanteOcchio" (click)="inputCheckPassword.type=inputCheckPassword.type=='password'?'text':'password'"
+            (click)="occhio3()">
+            <i class="fa-regular fa-eye-slash occhio3"></i></p>
+      </div>
+      <button type="submit" class="btn btn-primary mt-2 nuoviDati rimuoviForm" (click)="invia1()">Invia</button>
+    </form>
+
+    <div class="comandi">
+      <button class="btn btn-primary mt-2 datiOriginali" (click)="cambia()">Modifica</button>
+      <button class="btn btn-danger mt-1 nuoviDati rimuoviForm" (click)="cambia()">Annulla</button>
+    </div>
+    <div class="fw-bold text-danger text-center" *ngIf="this.interruttore1"><p>Errore, username già in uso<p></div>
+    <div class="fw-bold text-danger text-center" *ngIf="this.interruttore2"><p>Errore, controlla di aver reinserito correttamente la password<p></div>
+    <div class="fw-bold text-danger text-center" *ngIf="this.interruttore3"><p>Errore, email non valida<p></div>
+
+  </div>
+
+  <div id="recordAcquisti">
+    <h3 class="fw-bold text-primary">Record degli acquisti</h3>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let recordAcquisto of recordAcquisti">{{recordAcquisto.oggetti}} {{recordAcquisto.spesa}}
+         {{recordAcquisto.dataAcquisto}}</li>
+    </ul>
+  </div>
+</section>
+
+<app-navbar class="utenteDaModificare"></app-navbar>
+
+<section class="utenteModificato scompari">
+  <div>
+    <p class="fw-bold mt-5 mb-0">Utente modificato con successo</p>
+    <button [routerLink]="['/login']" class="btn btn-primary mt-4">Torna al Login</button>
+  </div>
+</section>
+
+<section class="ricaricaEffettuata scompari">
+  <div>
+    <p class="fw-bold mt-5 mb-0">Ricarica effettuata con successo</p>
+    <button [routerLink]="['/']" class="btn btn-primary mt-4">Torna alla home</button>
+  </div>
+</section>

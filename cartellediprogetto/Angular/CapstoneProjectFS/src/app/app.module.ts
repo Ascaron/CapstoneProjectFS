@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { VideogiocoComponent } from './components/videogioco/videogioco.component';
@@ -14,6 +14,12 @@ import { MusicaComponent } from './components/musica/musica.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CarrelloComponent } from './components/carrello/carrello.component';
 import { ListapreferitiComponent } from './components/listapreferiti/listapreferiti.component';
+import { TuttiprodottiComponent } from './components/tuttiprodotti/tuttiprodotti.component';
+import { PaginaVideogiochiComponent } from './components/pagina-videogiochi/pagina-videogiochi.component';
+import { PaginaFilmTvComponent } from './components/pagina-film-tv/pagina-film-tv.component';
+import { PaginaMusicaComponent } from './components/pagina-musica/pagina-musica.component';
+import { TokenInterceptor } from './token.interceptor';
+import { DatiUtenteComponent } from './components/dati-utente/dati-utente.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +33,11 @@ import { ListapreferitiComponent } from './components/listapreferiti/listaprefer
     MusicaComponent,
     CarrelloComponent,
     ListapreferitiComponent,
+    TuttiprodottiComponent,
+    PaginaVideogiochiComponent,
+    PaginaFilmTvComponent,
+    PaginaMusicaComponent,
+    DatiUtenteComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +46,7 @@ import { ListapreferitiComponent } from './components/listapreferiti/listaprefer
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [VideogiocoService],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -12,7 +12,6 @@ import com.epicode.andreacursi.capstoneproject.entities.Carrello;
 import com.epicode.andreacursi.capstoneproject.entities.FilmTv;
 import com.epicode.andreacursi.capstoneproject.entities.ListaPreferiti;
 import com.epicode.andreacursi.capstoneproject.entities.Musica;
-import com.epicode.andreacursi.capstoneproject.entities.RecordAcquisti;
 import com.epicode.andreacursi.capstoneproject.entities.Ruolo;
 import com.epicode.andreacursi.capstoneproject.entities.Utente;
 import com.epicode.andreacursi.capstoneproject.entities.Videogioco;
@@ -73,10 +72,6 @@ public class CapstoneProjectFsApplication implements CommandLineRunner{
 		
 		Ruolo r2=(Ruolo)ctx.getBean("ru2");
 		ruoSe.inserisci(r2);
-		
-		//Utente admin
-		Utente u1=(Utente)ctx.getBean("ut1");
-		uteSe.inserisci(u1);
 		
 		//Videogiochi
 		Videogioco v1=(Videogioco)ctx.getBean("vi1");
@@ -171,13 +166,24 @@ public class CapstoneProjectFsApplication implements CommandLineRunner{
 		Musica m10=(Musica)ctx.getBean("mu10");
 		musSe.inserisci(m10);
 		
-		//User di prova
+		//Users di prova
 		Carrello c1=(Carrello)ctx.getBean("ca1");
 		carSe.inserisci(c1);
+		
+		Carrello c2=(Carrello)ctx.getBean("ca2");
+		carSe.inserisci(c2);
 		
 		ListaPreferiti l1=(ListaPreferiti)ctx.getBean("li1");
 		lisSe.inserisci(l1);
 		
+		ListaPreferiti l2=(ListaPreferiti)ctx.getBean("li2");
+		lisSe.inserisci(l2);
+		
+		//Utente admin
+		Utente u1=(Utente)ctx.getBean("ut1");
+		uteSe.inserisci(u1);
+		
+		//Utente user
 		Utente u2=(Utente)ctx.getBean("ut2");
 		uteSe.inserisci(u2);
 		

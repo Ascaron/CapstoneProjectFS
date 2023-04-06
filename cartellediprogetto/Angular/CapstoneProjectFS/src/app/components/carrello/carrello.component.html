@@ -1,7 +1,47 @@
-<section class="carrello mt-5">
+<section class="sezioneCarrello acquistoInCorso">
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let carrelloProdotto of carrelloProdotti">
-      {{carrelloProdotto?.titolo}}&nbsp; &nbsp; &nbsp;{{carrelloProdotto?.prezzo}}€</li>
+      <span><img src={{carrelloProdotto?.immagine}} alt="Immagine Prodotto" class="immagineProdotto"></span>
+      <span class="titoloProdotto">{{carrelloProdotto?.titolo}}</span><span>{{carrelloProdotto?.prezzo}}€</span>
+
+      <span>
+        <button class="bottoneCarrello btn btn-primary m-2" (click)="rimuoviDalCarrello(carrelloProdotto.codiceControllo)"
+        (click)="ricaricaPagina()"><i class="fa-solid fa-minus"></i></button>
+
+      <span>{{carrelloProdotto?.quantita}}</span>
+
+      <button class="bottoneCarrello btn btn-primary m-2" *ngIf="carrelloProdotto.acquistabile"
+      (click)="aggiungiAlCarrello(carrelloProdotto.codiceControllo)" (click)="ricaricaPagina()">
+      <i class="fa-solid fa-plus"></i></button>
+
+      <p class="bg-danger rounded text-white d-inline-block m-2 pulsanteBloccoAcquisto" *ngIf="!carrelloProdotto.acquistabile">
+        <i class="fa-solid fa-xmark"></i></p>
+
+    </span>
+  </li>
   </ul>
+  <div *ngIf="this.listaProdotti.length!=0" class="totaleSpesa fw-bold"><p *ngFor="let spesa of listaNumeri">
+    TOTALE CARRELLO*: {{spesa}}€</p>
+  <p>*Costo spedizione a prodotto: 2€</p></div>
+  <div class="text-center mx-auto">
+    <span *ngIf="this.interruttore1">
+      <button class="btn btn-primary my-2 mx-auto fw-bold bottoneAcquista" *ngIf="this.interruttore2" (click)="acquista()">ACQUISTA</button></span>
+      <span *ngIf="!this.interruttore2"><p class="p-2 bg-danger text-white d-inline-block m-2 fw-bold">
+        IMPOSSIBILE ACQUISTARE</p></span>
+    <span *ngFor="let carrelloProd of carrelloProdotti"><p *ngIf="!carrelloProd.acquistabile" class="text-danger fw-bold">
+      Rimuovi un elemento di {{carrelloProd.titolo}}<p></span>
+  </div>
 </section>
-<app-navbar></app-navbar>
+
+<div *ngIf="!this.interruttore1" class="carrelloVuoto">
+  <p class="fw-bold mt-5 mb-0">Il tuo carrello è vuoto, guarda i nostri prodotti</p>
+</div>
+
+<app-navbar class="acquistoInCorso"></app-navbar>
+
+<section class="acquistoConcluso scompari">
+  <div>
+    <p class="fw-bold mt-5 mb-0">Acquisto completato con successo</p>
+    <button [routerLink]="['/']" class="btn btn-primary mt-4">Torna alla Home</button>
+  </div>
+</section>

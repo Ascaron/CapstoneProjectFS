@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,9 +58,12 @@ public class RegistrazioneController {
 		utente.setDataNascita(registrazione.getDataNascita());
 		utente.setAttivo(true);
 		utente.setRuoli(new HashSet<>() {{add(ruoSe.ottieniDaId(2).get());}});
+		if(registrazione.getPortafoglio()<0) {
+			registrazione.setPortafoglio(0);
+		}
 		utente.setPortafoglio(registrazione.getPortafoglio());
-		utente.setCarrello(carSe.ottieniTutti().get(carSe.ottieniTutti().size()-1));
-		utente.setListaPreferiti(lisSe.ottieniTutti().get(lisSe.ottieniTutti().size()-1));
+		utente.setCarrello(carSe.ottieniDaId(carSe.ottieniTutti().size()).get());
+		utente.setListaPreferiti(lisSe.ottieniDaId(lisSe.ottieniTutti().size()).get());
 		utente.setRecordAcquisti(new HashSet<>());
 		uteSe.inserisci(utente);
 	}

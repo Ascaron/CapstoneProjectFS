@@ -1,6 +1,14 @@
 <section class="listaPreferiti">
   <ul class="list-group">
-    <li class="list-group-item" *ngFor="let listaPreferitiProdotto of listaPreferitiProdotti">{{listaPreferitiProdotto?.titolo}}</li>
+    <li class="list-group-item" *ngFor="let listaPreferitiProdotto of listaPreferitiProdotti">
+      <span><img src={{listaPreferitiProdotto?.immagine}} alt="Immagine Prodotto" class="immagineProdotto"></span>
+      <span class="titoloProdotto">{{listaPreferitiProdotto?.titolo}}</span>
+      <span><button class="btn btn-danger rounded-circle m-2" (click)="rimuoviDallaListaPreferiti(listaPreferitiProdotto.codiceControllo)"
+        (click)="ricaricaPagina()"><i class="fa-solid fa-heart-crack"></i></button></span>
+    </li>
   </ul>
+  <div *ngIf="listaPreferitiProdotti.length==0" class="listaVuota">
+    <p class="fw-bold mt-5 mb-0">La tua lista dei preferiti è vuota</p>
+  </div>
 </section>
 <app-navbar></app-navbar>

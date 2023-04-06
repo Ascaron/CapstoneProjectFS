@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Videogioco } from '../interfaces/videogioco';
+import { Videogioco, VideogiocoCarrelloListaPreferiti } from '../interfaces/videogioco';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -17,5 +17,9 @@ export class VideogiocoService {
   public ottieniVideogiochi():  Observable<Videogioco[]>{
     return this.http.get<Videogioco[]>(this.ottieniVideogiochiString);
   };
+
+  public ottieniVideogiocoCarrelloListaPreferiti(id:number): Observable<VideogiocoCarrelloListaPreferiti[]>{
+    return this.http.get<VideogiocoCarrelloListaPreferiti[]>(this.apiServerUrl+`/videogiochi/controllointeressantivideogiochi/id=${id}`)
+  }
 
 }

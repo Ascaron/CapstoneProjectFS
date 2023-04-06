@@ -13,8 +13,10 @@ export class LoginService {
   private authSubj = new BehaviorSubject<null | Loginresponse>(null);
   user$ = this.authSubj.asObservable();
   loggedSubj = new ReplaySubject<false | Loginresponse>();
+
   private apiServerUrl = environment.apiBaseUrl;
   private ottieniLoginString = this.apiServerUrl + '/aut/login';
+  private ottieniLogoutString= this.apiServerUrl+'/logout';
 
   constructor(private http: HttpClient) { }
 
@@ -38,5 +40,22 @@ export class LoginService {
   ottieniLoggato(){
     return this.loggedSubj.asObservable()
   }
+
+  logout(){
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("nome");
+    localStorage.removeItem("id");
+    localStorage.removeItem("ruolo1");
+    if(localStorage.getItem("ruolo2")){
+      localStorage.removeItem("ruolo2")
+    }
+    this.loggedSubj.next(false)
+    return this.http.get(this.ottieniLogoutString)
+   }
+
+   public controlloCorrispondenzaPassword(username:string, pswd:string){
+    return this.http.get(this.apiServerUrl+`/utente/controllocorrispondenzapassword?username=${username}&pswd=${pswd}`)
+   }
 
 }

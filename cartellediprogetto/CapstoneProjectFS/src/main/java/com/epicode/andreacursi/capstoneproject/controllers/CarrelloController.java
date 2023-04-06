@@ -1,10 +1,8 @@
 package com.epicode.andreacursi.capstoneproject.controllers;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,19 +11,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epicode.andreacursi.capstoneproject.entities.Carrello;
-import com.epicode.andreacursi.capstoneproject.entities.FilmTv;
-import com.epicode.andreacursi.capstoneproject.entities.Musica;
 import com.epicode.andreacursi.capstoneproject.entities.ProdottoCarrello;
 import com.epicode.andreacursi.capstoneproject.entities.Utente;
-import com.epicode.andreacursi.capstoneproject.entities.Videogioco;
-import com.epicode.andreacursi.capstoneproject.model.AggiungiProdotto;
+import com.epicode.andreacursi.capstoneproject.model.ProdottoCarrelloAcquistabile;
 import com.epicode.andreacursi.capstoneproject.services.CarrelloService;
 import com.epicode.andreacursi.capstoneproject.services.FilmTvService;
 import com.epicode.andreacursi.capstoneproject.services.MusicaService;
@@ -55,14 +48,67 @@ public class CarrelloController {
 
 	@Autowired
 	ProdottoCarrelloService proCaSe;
+	
+	@GetMapping("/spesatotale")
+	@PreAuthorize("hasRole('USER')")
+	public List<Double> ottieniSpesaTotale(@RequestParam int id){
+		List<Double> listaFinale=new ArrayList<>();
+		double spesa=uteSe.ottieniDaId(id).get().getCarrello().getPrezzoTotale();
+		listaFinale.add(spesa);
+		return listaFinale;
+	}
 
 	@GetMapping("/contenuto/id={id}")
-	public Carrello ottieniContenutoCarrello(@PathVariable int id) {
+	@PreAuthorize("hasRole('USER')")
+	public List<ProdottoCarrelloAcquistabile> ottieniContenutoCarrello(@PathVariable int id) {
+		List<ProdottoCarrelloAcquistabile> listaFinale=new ArrayList<>();
 		int carrelloId = uteSe.ottieniDaId(id).get().getCarrello().getId();
-		return carSe.ottieniDaId(carrelloId).get();
+		Carrello carrelloUtente=carSe.ottieniDaId(carrelloId).get();
+		carrelloUtente.getProdottoCarrello().forEach((prod)->{
+			ProdottoCarrelloAcquistabile prodottoFinale=new ProdottoCarrelloAcquistabile();
+			prodottoFinale.setId(prod.getId());
+			prodottoFinale.setTitolo(prod.getTitolo());
+			prodottoFinale.setPrezzo(prod.getPrezzo());
+			prodottoFinale.setCodiceControllo(prod.getCodiceControllo());
+			prodottoFinale.setQuantita(prod.getQuantita());
+			prodottoFinale.setImmagine(prod.getImmagine());
+			filSe.ottieniTutti().forEach((film)->{
+				if(prod.getCodiceControllo().equals(film.getCodiceControllo())) {
+					if(prod.getQuantita()>film.getQuantita()) {
+						prodottoFinale.setAcquistabile(false);
+					}
+					else {
+						prodottoFinale.setAcquistabile(true);
+					}
+				}
+			});
+			musSe.ottieniTutti().forEach((musica)->{
+				if(prod.getCodiceControllo().equals(musica.getCodiceControllo())) {
+					if(prod.getQuantita()>musica.getQuantita()) {
+						prodottoFinale.setAcquistabile(false);
+					}
+					else {
+						prodottoFinale.setAcquistabile(true);
+					}
+				}
+			});
+			vidSe.ottieniTutti().forEach((video)->{
+				if(prod.getCodiceControllo().equals(video.getCodiceControllo())) {
+					if(prod.getQuantita()>video.getQuantita()) {
+						prodottoFinale.setAcquistabile(false);
+					}
+					else {
+						prodottoFinale.setAcquistabile(true);
+					}
+				}
+			});
+			listaFinale.add(prodottoFinale);
+		});
+		return listaFinale;
 	}
 
 	@PostMapping("/aggiungialcarrello")
+	@PreAuthorize("hasRole('USER')")
 	public void aggiungiAlCarrello(@RequestParam String id, @RequestParam String codice) {
 		int idUtente = Integer.parseInt(id);
 		List<ProdottoCarrello> prodotti = new ArrayList<>();
@@ -132,6 +178,7 @@ public class CarrelloController {
 	}
 
 	@DeleteMapping("/rimuovidalcarrello")
+	@PreAuthorize("hasRole('USER')")
 	public void eliminaDaCarrello(@RequestParam int id, @RequestParam String codice) {
 		int carrelloId = uteSe.ottieniDaId(id).get().getCarrello().getId();
 		Carrello carrello = carSe.ottieniDaId(carrelloId).get();
@@ -157,19 +204,6 @@ public class CarrelloController {
 			}
 		}
 
-	}
-
-	@GetMapping("/ottieniprodottonelcarrelloutente={id}&codice={codice}")
-	public ProdottoCarrello ottieniFilmTvNelCarrello(@PathVariable int id, @PathVariable String codice) {
-		int carrelloId = uteSe.ottieniDaId(id).get().getCarrello().getId();
-		Set<ProdottoCarrello> carrelloProdotti= carSe.ottieniDaId(carrelloId).get().getProdottoCarrello();
-		List<ProdottoCarrello> prodotti=new ArrayList<>();
-		carrelloProdotti.forEach((el)->{
-			if(el.getCodiceControllo().equals(codice)) {
-				prodotti.add(el);
-			}
-		});
-		return prodotti.get(0);
 	}
 
 }

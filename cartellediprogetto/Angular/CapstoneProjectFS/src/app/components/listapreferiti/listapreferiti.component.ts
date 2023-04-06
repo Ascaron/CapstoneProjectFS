@@ -32,4 +32,12 @@ export class ListapreferitiComponent implements OnInit {
     );
   }
 
+  public rimuoviDallaListaPreferiti(codice:string){
+    this.lisSe.rimuoviDallaListaPreferiti(codice).subscribe();
+  }
+
+  public ricaricaPagina(){
+    window.location.reload();
+  }
+
 }

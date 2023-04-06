@@ -23,6 +23,10 @@ public class UtenteService {
 		return uteRepo.findById(id);
 	}
 	
+	public Optional<Utente> ottieniDaUsername(String valore) {
+		return uteRepo.findByUsername(valore);
+	}
+	
 	public List<Utente> ottieniTutti() {
 		return uteRepo.findAll();
 	}

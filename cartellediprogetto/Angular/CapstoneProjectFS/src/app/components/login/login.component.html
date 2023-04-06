@@ -1,14 +1,21 @@
-<section class="accessoConCredenziali mx-auto mt-5 w-25">
+<section class="accessoConCredenziali">
   <form [formGroup]="form" (ngSubmit)="login()">
     <div class="form-group">
       <label for="inputUsername">Username</label>
-      <input type="text" class="form-control" id="inputUsername" formControlName="inputUsername" placeholder="Inserisci il tuo username">
+      <input type="text" class="form-control" id="inputUsername"
+      formControlName="inputUsername" placeholder="Inserisci il tuo username" required>
     </div>
     <div class="form-group">
       <label for="inputPassword">Password</label>
-      <input type="password" class="form-control" id="inputPassword" formControlName="inputPassword" placeholder="Inserisci la tua password">
+      <input type="password" class="form-control" id="inputPassword"
+        formControlName="inputPassword" placeholder="Inserisci la tua password" #inputPassword required>
+        <p class="btn btn-light d-inline-block pulsanteOcchio" (click)="inputPassword.type=inputPassword.type=='password'?'text':'password'"
+        (click)="occhio()">
+        <i class="fa-regular fa-eye-slash occhio"></i></p>
     </div>
     <button type="submit" class="btn btn-primary mt-2" [ngClass]="{'disabled':form.invalid}">Accedi</button>
   </form>
+  <div *ngIf="this.interruttore1" class="fw-bold text-danger text-center"><p>Username non trovato</p></div>
+  <div *ngIf="this.interruttore2" class="fw-bold text-danger text-center"><p>Password errata</p></div>
 </section>
 <app-navbar></app-navbar>

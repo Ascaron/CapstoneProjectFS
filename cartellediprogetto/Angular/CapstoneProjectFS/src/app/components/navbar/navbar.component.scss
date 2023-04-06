@@ -1,0 +1,66 @@
+.navbarSuperiore{
+  background-color: lightsteelblue;
+  border-bottom: 1rem inset rgb(0, 110, 255);
+  #nomeSito{
+    font-family: 'Alfa Slab One', cursive;
+    @media(min-width:768px){
+      font-size: 28px;
+    }
+    @media(min-width:1200px){
+      font-size: 33px;
+    }
+    @media(min-width:1400px){
+      font-size: 35px;
+    }
+  }
+  ul{
+    @media(min-width:1200px){
+      margin:0px 0px 0px 3vw;
+    }
+  }
+  li{
+    a{
+      color: rgb(0, 110, 255);
+      font-weight: bold;
+    }
+  }
+  li:last-of-type{
+    @media(min-width:992px){
+      margin:0px 0px 0px 20vw;
+    }
+    @media(min-width:1200px){
+      margin:0px 0px 0px 30vw;
+    }
+    @media(min-width:1400px){
+      margin:0px 0px 0px 40vw;
+    }
+  }
+  i{
+    font-size: 30px;
+  }
+}
+
+.navbar-toggler{
+  color: rgb(0, 110, 255);
+}
+
+#nomeSito{
+  color: rgb(0, 110, 255);
+}
+
+.navbarInferiore{
+  li{
+    background-color: lightsteelblue;
+    text-align: center;
+    a{
+      color: rgb(0, 110, 255);
+      font-weight: bold;
+    }
+  }
+  button{
+    background-color: lightsteelblue;
+  }
+  i{
+    font-size: 30px;
+  }
+}

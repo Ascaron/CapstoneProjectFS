@@ -1,0 +1,24 @@
+.registrazioneUtente{
+  margin: 100px auto;
+  width:50%;
+  @media(min-width: 992px){
+    width:400px;
+  }
+}
+
+#inputPassword, #inputCheckPassword{
+  width: 80%;
+  display: inline-block;
+  @media(min-width: 768px){
+    width:86%;
+  }
+}
+
+.pulsanteOcchio{
+  width:19%;
+  display: inline-block;
+  margin-bottom: 0.5vh;
+  @media(min-width: 768px){
+    width:13%;
+  }
+}

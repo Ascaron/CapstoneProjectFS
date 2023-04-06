@@ -1,16 +1,34 @@
-<section class="videogioco">
-  <div class="card mx-auto mx-sm-3 my-3 d-sm-inline-block w-md-25 bg-primary"  *ngFor="let videogioco of videogiochi" style="width: 18rem;">
-    <img class="card-img-top" src={{videogioco?.immagine}} alt="Immagine Videogioco">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">{{videogioco?.titolo}}</li>
-      <li class="list-group-item">{{videogioco?.piattaforma}}</li>
-      <li class="list-group-item">{{videogioco?.casaSviluppo}}</li>
-      <li class="list-group-item">{{videogioco?.editore}}</li>
-      <li class="list-group-item">{{videogioco?.prezzo}}€</li>
-      <li class="list-group-item" *ngIf="token"><button (click)="aggiungiAlCarrello(videogioco.codiceControllo)" class="btn btn-primary mt-2">
-        Aggiungi al carrello</button><button (click)="aggiungiAllaListaPreferiti(videogioco.codiceControllo)" class="btn btn-primary mt-2">
-          Aggiungi ai preferiti</button></li>
-    </ul>
-  </div>
-</section>
-<app-navbar></app-navbar>
+<div class="card mx-auto mx-md-3 my-3 d-md-inline-block w-md-25 bg-primary" *ngFor="let videogioco of videogiochi"
+  style="width: 18rem;">
+  <img class="card-img-top" src={{videogioco?.immagine}} alt="Immagine Videogioco">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{videogioco?.titolo}}</li>
+    <li class="list-group-item">{{videogioco?.piattaforma}}</li>
+    <li class="list-group-item">{{videogioco?.casaSviluppo}}</li>
+    <li class="list-group-item">{{videogioco?.editore}}</li>
+    <li class="list-group-item">{{videogioco?.prezzo}}€</li>
+    <li class="list-group-item" *ngIf="token">
+
+        <span *ngIf="videogioco.acquistabile"><button id="aggiungiAlCarrello" *ngIf="!videogioco.nelCarrello"
+          (click)="aggiungiAlCarrello(videogioco.codiceControllo)" (click)="ricaricaPagina()" class="btn btn-primary m-2">
+          Aggiungi <i class="fa-solid fa-cart-shopping"></i></button></span>
+
+        <button id="vaiAlCarrello" *ngIf="videogioco.nelCarrello" [routerLink]="['/carrello']"
+        class="btn btn-success m-2">
+        Nel carrello</button>
+
+        <span *ngIf="!videogioco.acquistabile">
+          <span *ngIf="!videogioco.nelCarrello">
+            <p class="p-2 bg-danger rounded text-white d-inline-block m-2">Esaurito <i class="fa-solid fa-xmark"></i></p></span></span>
+
+        <button id="aggiungiAllaListaPreferiti" *ngIf="!videogioco.nellaLista"
+        (click)="aggiungiAllaListaPreferiti(videogioco.codiceControllo)" (click)="ricaricaPagina()" class="btn btn-primary m-2">
+        Preferito <i class="fa-regular fa-circle"></i></button>
+
+        <button id="rimuoviDallaListaPreferiti" *ngIf="videogioco.nellaLista" (click)="rimuoviDallaListaPreferiti(videogioco.codiceControllo)"
+        (click)="ricaricaPagina()" class="btn btn-success m-2">
+        Preferito <i class="fa-regular fa-circle-check"></i></button>
+
+      </li>
+  </ul>
+</div>

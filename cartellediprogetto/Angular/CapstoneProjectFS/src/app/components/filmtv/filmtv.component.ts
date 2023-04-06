@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Filmtv } from 'src/app/interfaces/filmtv';
+import { FilmTvCarrelloListaPreferiti } from 'src/app/interfaces/filmtv';
 import { FilmtvService } from 'src/app/services/filmtv.service';
 import { CarrelloService } from 'src/app/services/carrello.service';
 import { ListapreferitiService } from 'src/app/services/listapreferiti.service';
-import { Carrello } from 'src/app/interfaces/carrello';
-import { ProdottoCarrello } from 'src/app/interfaces/prodotto-carrello';
 
 @Component({
   selector: 'app-filmtv',
@@ -14,7 +12,7 @@ import { ProdottoCarrello } from 'src/app/interfaces/prodotto-carrello';
 })
 export class FilmtvComponent implements OnInit {
 
-  public filmtvs: Filmtv[];
+  public filmtvs: FilmTvCarrelloListaPreferiti[];
   token!: string | null;
   idUtente!: number;
 
@@ -26,19 +24,24 @@ export class FilmtvComponent implements OnInit {
     if (localStorage.getItem("token")) {
       this.token = localStorage.getItem("token");
       this.idUtente = parseInt(localStorage.getItem("id")!);
+      this.ottieniFilmTv(this.idUtente);
     }
-    this.ottieniFilmtvs();
+    else {
+      this.ottieniFilmTv(0);
+    }
   }
 
-  public ottieniFilmtvs(): void {
-    this.filSe.ottieniFilmtv().subscribe(
-      (response: Filmtv[]) => {
-        this.filmtvs = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
+  public ottieniFilmTv(valore:number):void{
+    this.filSe.ottieniFilmTvCarrelloLista(valore).subscribe((res:FilmTvCarrelloListaPreferiti[])=>{
+      this.filmtvs = res;
+    },
+    (error: HttpErrorResponse) => {
+      alert(error.message);
+    })
+  }
+
+  public ricaricaPagina(){
+    window.location.reload();
   }
 
   public aggiungiAlCarrello(codice: string) {
@@ -46,19 +49,11 @@ export class FilmtvComponent implements OnInit {
   }
 
   public aggiungiAllaListaPreferiti(codice: string) {
-    this.lisSe.aggiungiAllaListaPreferiti(codice)
+    this.lisSe.aggiungiAllaListaPreferiti(codice).subscribe();
   }
 
-  public checkCarrello(oggetto:Filmtv){
-    this.carSe.ottieniCarrello().subscribe((res:Carrello)=>{
-      res.prodottoCarrello.forEach((el:ProdottoCarrello)=>{
-        if(oggetto.codiceControllo===el.codiceControllo){
-          return true
-        }else{
-          return false
-        }
-      })
-    })
-  };
-}
+  public rimuoviDallaListaPreferiti(codice:string){
+    this.lisSe.rimuoviDallaListaPreferiti(codice).subscribe();
+  }
 
+}

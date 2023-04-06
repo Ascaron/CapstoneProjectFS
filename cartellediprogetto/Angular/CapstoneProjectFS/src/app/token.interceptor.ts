@@ -15,17 +15,13 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private logSe:LoginService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.logSe.user$.pipe(take(1),switchMap(user=>{
-      if (!user) {
-        console.log("MARIO")
-        return next.handle(req)
-
-      }
-      const newReq = req.clone({
-        headers:req.headers.set('Authorization',`Bearer ${user.token}`)
-      })
-      console.log("PINA")
-      return next.handle(newReq)
-    }));
+    const utenteAutorizzato:any=localStorage.getItem("token");
+    if(!utenteAutorizzato){
+      return next.handle(req)
+    }
+    const newReq = req.clone({
+      headers:req.headers.set('Authorization',`Bearer ${utenteAutorizzato}`)
+    })
+    return next.handle(newReq)
   }
 }

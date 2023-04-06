@@ -11,30 +11,30 @@ import { AggiungiAlCarrello } from '../interfaces/carrello';
 export class ListapreferitiService {
 
   private apiServerUrl = environment.apiBaseUrl;
-  private aggiungiAllaListaPreferitiString = this.apiServerUrl+'/aggiungi';
 
   constructor(private http: HttpClient) { }
 
   public ottieniListapreferiti():  Observable<Listapreferiti>{
     let id=localStorage.getItem("id")
     return this.http.get<Listapreferiti>(this.apiServerUrl+ '/listapreferiti/contenuto/id='+id);
-
   };
 
   public aggiungiAllaListaPreferiti(codiceProdotto:string){
     let id=localStorage.getItem("id")!;
-    let token=localStorage.getItem("token");
-    var data:AggiungiAlCarrello={
+    let data:AggiungiAlCarrello={
       codice: codiceProdotto,
       idUtente:id
     }
-    console.log(data.codice);
-    console.log(data.idUtente);
-    return this.http.post(this.aggiungiAllaListaPreferitiString, data)
+    return this.http.post(this.apiServerUrl+`/listapreferiti/aggiungiallalistapreferiti?id=${data.idUtente}&codice=${data.codice}`, data)
     .pipe(catchError(err=>{
       console.log(err);
       throw err;
     }))
+  }
+
+  public rimuoviDallaListaPreferiti(codiceProdotto:string){
+    let idUtente=localStorage.getItem("id")!;
+    return this.http.delete(this.apiServerUrl+`/listapreferiti/rimuovidallalistapreferiti?id=${idUtente}&codice=${codiceProdotto}`)
   }
 
 }

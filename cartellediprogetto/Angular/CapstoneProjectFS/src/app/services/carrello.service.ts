@@ -5,6 +5,8 @@ import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AggiungiAlCarrello, Carrello } from '../interfaces/carrello';
 import { Filmtv } from '../interfaces/filmtv';
+import { TokenInterceptor } from '../token.interceptor';
+import { ProdottoCarrelloAcquistabile } from '../interfaces/prodotto-carrello';
 
 @Injectable({
   providedIn: 'root'
@@ -16,41 +18,29 @@ export class CarrelloService{
 
   constructor(private http: HttpClient) { }
 
-  public ottieniCarrello(): Observable<Carrello> {
+  public ottieniCarrello(): Observable<ProdottoCarrelloAcquistabile[]> {
     let id=localStorage.getItem("id")
-    let token=localStorage.getItem("token")
-    return this.http.get<Carrello>(this.apiServerUrl + '/carrello/contenuto/id=' + id, {
-      headers:{
-        "Authorization": "Bearer "+token
-      }
-    });
+    return this.http.get<ProdottoCarrelloAcquistabile[]>(this.apiServerUrl + '/carrello/contenuto/id=' + id);
 
   }
 
+  public ottieniTotaleSpesa(){
+    let id=localStorage.getItem("id")
+    return this.http.get(this.apiServerUrl+`/carrello/spesatotale?id=${id}`)
+  }
+
   aggiungiAlCarrello(codiceProdotto: string){
-    let id=localStorage.getItem("id")!;
-    let token=localStorage.getItem("token");
+    let id=localStorage.getItem("id")!
     let body:AggiungiAlCarrello={
       codice: codiceProdotto,
       idUtente:id
     }
-    console.log(body.codice);
-    console.log(body.idUtente);
-    console.log(this.aggiungiAlCarrelloString+`?id=${id}&codice=${codiceProdotto}`)
     return this.http.post(this.aggiungiAlCarrelloString+`?id=${id}&codice=${codiceProdotto}`, body)
   }
 
-  public ottieniFilmTvNelCarrelloComunicazione(id:number, codice:string): Observable<Filmtv>{
-    let token=localStorage.getItem("token");
-    return this.http.get<Filmtv>(this.apiServerUrl+`/ottienifilmtvnelcarrelloutente=${id}&codice=${codice}`, {headers:{
-      "Authorization": "Bearer "+token
-    }})
-  }
-
-  public ottieniFilmTvNelCarrello(id:number, codice:string):string|void{
-    this.ottieniFilmTvNelCarrelloComunicazione(id, codice).subscribe((res)=>{
-      return res.codiceControllo
-    })
+  public rimuoviDalCarrello(codice:string){
+    let id=localStorage.getItem("id")
+    return this.http.delete(this.apiServerUrl+`/carrello/rimuovidalcarrello?id=${id}&codice=${codice}`)
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Musica } from 'src/app/interfaces/musica';
+import { MusicaCarrelloListaPreferiti } from 'src/app/interfaces/musica';
 import { MusicaService } from 'src/app/services/musica.service';
 import { CarrelloService } from 'src/app/services/carrello.service';
 import { ListapreferitiService } from 'src/app/services/listapreferiti.service';
@@ -12,8 +12,9 @@ import { ListapreferitiService } from 'src/app/services/listapreferiti.service';
 })
 export class MusicaComponent implements OnInit {
 
-  public musiche:Musica[];
-  token!:string | null
+  public musiche:MusicaCarrelloListaPreferiti[];
+  token!:string | null;
+  idUtente!: number;
 
   constructor(private musSe: MusicaService, private carSe:CarrelloService, private lisSe:ListapreferitiService) {
     this.musiche=[];
@@ -22,13 +23,18 @@ export class MusicaComponent implements OnInit {
   ngOnInit(): void {
     if(localStorage.getItem("token")){
       this.token=localStorage.getItem("token");
+      this.idUtente = parseInt(localStorage.getItem("id")!);
+      this.ottieniMusiche(this.idUtente);
     }
-    this.ottieniMusiche();
+    else{
+      this.ottieniMusiche(0);
+    }
+
   }
 
-  public ottieniMusiche(): void {
-    this.musSe.ottieniMusiche().subscribe(
-      (response: Musica[]) => {
+  public ottieniMusiche(valore:number): void {
+    this.musSe.ottieniMusicaCarrelloLista(valore).subscribe(
+      (response: MusicaCarrelloListaPreferiti[]) => {
         this.musiche = response;
       },
       (error: HttpErrorResponse) => {
@@ -37,12 +43,20 @@ export class MusicaComponent implements OnInit {
     );
   }
 
-  public aggiungiAlCarrello(codice: string) {
-    this.carSe.aggiungiAlCarrello(codice)
+  public ricaricaPagina(){
+    window.location.reload();
   }
 
-  public aggiungiAllaListaPreferiti(codice: string){
-    this.lisSe.aggiungiAllaListaPreferiti(codice)
+  public aggiungiAlCarrello(codice: string) {
+    this.carSe.aggiungiAlCarrello(codice).subscribe();
+  }
+
+  public aggiungiAllaListaPreferiti(codice: string) {
+    this.lisSe.aggiungiAllaListaPreferiti(codice).subscribe();
+  }
+
+  public rimuoviDallaListaPreferiti(codice:string){
+    this.lisSe.rimuoviDallaListaPreferiti(codice).subscribe();
   }
 
 }

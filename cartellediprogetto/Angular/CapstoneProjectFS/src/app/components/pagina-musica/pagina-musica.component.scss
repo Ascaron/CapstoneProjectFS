@@ -1,0 +1,15 @@
+.sezioneMusicaApp{
+  margin: 100px 0;
+  @media (min-width: 768px) {
+    margin-left: 10vw;
+  }
+  @media (min-width: 992px) {
+    margin-left: 20vw;
+  }
+  @media (min-width: 1200px) {
+    margin-left: 10vw;
+  }
+  @media (min-width: 1400px) {
+    margin-left: 8vw;
+  }
+}

@@ -1,0 +1,54 @@
+.listaPreferiti{
+  margin: 100px 0;
+}
+
+.immagineProdotto{
+  max-width: 100px;
+}
+
+.list-group-item{
+  border: none;
+  font-weight: bold;
+  box-sizing: content-box;
+  span{
+    display: inline-block;
+    margin: 0 3vw;
+    @media(min-width:576px){
+      margin: 0 4vw;
+    }
+    @media(min-width:768px){
+      margin: 0 40px;
+    }
+  }
+  .titoloProdotto{
+    position: relative;
+    top: 5px;
+    width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    @media(min-width:768px){
+      width: 200px;
+    }
+  }
+  @media (min-width:768px){
+    width: 80vw;
+    margin: 0 auto;
+  }
+  @media (min-width:992px){
+    width: 725px;
+    margin: 0 auto;
+  }
+}
+
+.listaVuota{
+  width:250px;
+  height:250px;
+  margin:10vh auto 0px;
+  border:1px solid white;
+  border-radius: 10%;
+  color: rgb(0, 110, 255);
+  font-size: 30px;
+  text-align: center;
+  background-color: white;
+}

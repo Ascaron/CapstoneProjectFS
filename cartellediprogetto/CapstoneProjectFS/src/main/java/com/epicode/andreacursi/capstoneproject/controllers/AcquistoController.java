@@ -6,14 +6,15 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epicode.andreacursi.capstoneproject.entities.Carrello;
-import com.epicode.andreacursi.capstoneproject.entities.FilmTv;
 import com.epicode.andreacursi.capstoneproject.entities.ProdottoCarrello;
 import com.epicode.andreacursi.capstoneproject.entities.RecordAcquisti;
 import com.epicode.andreacursi.capstoneproject.entities.Utente;
@@ -50,15 +51,52 @@ public class AcquistoController {
 	
 	@Autowired
 	ProdottoCarrelloService proCaSe;
+	
+	@GetMapping("/controlloacquisto")
+	@PreAuthorize("hasRole('USER')")
+	public List<String> controlloAcquisto(@RequestParam int idUtente) {
+		List<String> listaFinale=new ArrayList<>();
+		Utente utente=uteSe.ottieniDaId(idUtente).get();
+		int carrelloId= utente.getCarrello().getId();
+		Carrello carrelloUtente= carSe.ottieniDaId(carrelloId).get();
+		carrelloUtente.getProdottoCarrello().forEach((prod)->{
+			filSe.ottieniTutti().forEach((film)->{
+				if(prod.getCodiceControllo().equals(film.getCodiceControllo())) {
+					if(prod.getQuantita()>film.getQuantita()) {
+						listaFinale.add(prod.getTitolo());
+					}
+				}
+			});
+			musSe.ottieniTutti().forEach((musica)->{
+				if(prod.getCodiceControllo().equals(musica.getCodiceControllo())) {
+					if(prod.getQuantita()>musica.getQuantita()) {
+						listaFinale.add(prod.getTitolo());
+					}
+				}
+			});
+			vidSe.ottieniTutti().forEach((video)->{
+				if(prod.getCodiceControllo().equals(video.getCodiceControllo())) {
+					if(prod.getQuantita()>video.getQuantita()) {
+						listaFinale.add(prod.getTitolo());
+					}
+				}
+			});
+		});
+		if(utente.getPortafoglio()<carrelloUtente.getPrezzoTotale()) {
+			listaFinale.add(utente.getNome());
+		}
+		return listaFinale;
+	}
 
 	@PostMapping("/effettuaacquisto")
-	public void acquisto(@RequestParam int idUtente, @RequestParam int idCarrello, @RequestParam String data) {
+	@PreAuthorize("hasRole('USER')")
+	public void acquisto(@RequestParam int idUtente, @RequestParam String data) {
 		Utente utente=uteSe.ottieniDaId(idUtente).get();
-		Carrello carrelloAcquistato = carSe.ottieniDaId(idCarrello).get();
-		String stringa=new String();
+		int carrelloId= utente.getCarrello().getId();
+		Carrello carrelloAcquistato = carSe.ottieniDaId(carrelloId).get();
+		String stringa="Record: "+utente.getUsername()+"_"+data+"_"+carrelloAcquistato.getPrezzoTotale();
 		RecordAcquisti record= new RecordAcquisti();
-		carrelloAcquistato.getProdottoCarrello().stream().forEach(el-> stringa.concat(" "+el.getTitolo()));
-		
+
 		carrelloAcquistato.getProdottoCarrello().forEach((el)->{
 			if(!filSe.ottieniDaCodiceControllo(el.getCodiceControllo()).isEmpty()) {
 				filSe.ottieniDaCodiceControllo(el.getCodiceControllo()).get()
@@ -99,7 +137,6 @@ public class AcquistoController {
 		carrelloAcquistato.setPrezzoTotale(0);
 		carSe.inserisci(carrelloAcquistato);
 		prodotti.stream().forEach((el)->{
-			System.out.println(el);
 			proCaSe.elimina(el.getId());
 		});
 		

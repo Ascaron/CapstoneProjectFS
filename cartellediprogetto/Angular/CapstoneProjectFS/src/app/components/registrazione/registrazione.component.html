@@ -1,36 +1,52 @@
-<section class="registrazioneUtente mx-auto mt-5 w-25">
+<section class="registrazioneUtente">
   <form [formGroup]="form" (ngSubmit)="registra()">
     <div class="form-group">
-      <label for="inputNome">Nome</label>
-      <input type="text" class="form-control" id="inputNome" formControlName="inputNome" placeholder="Inserisci il tuo nome">
+      <label for="inputNome" class="form-label">Nome</label>
+      <input type="text" class="form-control" id="inputNome" formControlName="inputNome" placeholder="Inserisci il tuo nome" required>
     </div>
     <div class="form-group">
-      <label for="inputCognome">Cognome</label>
-      <input type="text" class="form-control" id="inputCognome" formControlName="inputCognome" placeholder="Inserisci il tuo cognome">
+      <label for="inputCognome" class="form-label">Cognome</label>
+      <input type="text" class="form-control" id="inputCognome" formControlName="inputCognome" placeholder="Inserisci il tuo cognome" required>
     </div>
     <div class="form-group">
-      <label for="inputUsername">Username</label>
-      <input type="text" class="form-control" id="inputUsername" formControlName="inputUsername" placeholder="Inserisci il tuo username">
+      <label for="inputUsername" class="form-label">Username</label>
+      <input type="text" class="form-control" id="inputUsername" formControlName="inputUsername"
+      placeholder="Inserisci il tuo username" required>
     </div>
     <div class="form-group">
-      <label for="inputEmail">Email</label>
+      <label for="inputEmail" class="form-label">Email</label>
       <input type="email" class="form-control" id="inputEmail" formControlName="inputEmail" aria-describedby="emailHelp"
-      placeholder="Inserisci la tua email">
-    </div>
-    <div>
-      <label for="inputDataNascita">Data di nascita</label>
-      <input type="date" class="form-control" id="inputDataNascita" formControlName="inputDataNascita">
+      placeholder="Inserisci la tua email" required>
     </div>
     <div class="form-group">
-      <label for="inputPortafoglio">Portafoglio</label>
-      <input type="number" class="form-control" id="inputPortafoglio" formControlName="inputPortafoglio" placeholder="Carica soldi sul tuo account">
-      <span>€</span>
+      <label for="inputDataNascita" class="form-label">Data di nascita</label>
+      <input type="date" class="form-control" id="inputDataNascita" formControlName="inputDataNascita" required>
     </div>
     <div class="form-group">
-      <label for="inputPassword">Password</label>
-      <input type="password" class="form-control" id="inputPassword" formControlName="inputPassword" placeholder="Inserisci la tua password">
+      <label for="inputPortafoglio" class="form-label">Portafoglio</label>
+      <input type="number" class="form-control" id="inputPortafoglio" formControlName="inputPortafoglio"
+      placeholder="Carica soldi sul tuo account" required>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword" class="form-label">Password</label>
+      <input type="password" class="form-control" id="inputPassword" #inputPassword formControlName="inputPassword"
+      placeholder="Inserisci la tua password" required>
+      <p class="btn btn-light pulsanteOcchio" (click)="inputPassword.type=inputPassword.type=='password'?'text':'password'"
+          (click)="occhio1()">
+          <i class="fa-regular fa-eye-slash occhio1"></i></p>
+    </div>
+    <div class="form-group">
+      <label for="inputCheckPassword" class="form-label">Controllo Password</label>
+      <input type="password" class="form-control" id="inputCheckPassword" #inputCheckPassword formControlName="inputCheckPassword"
+      placeholder="Reinserisci la tua password" required>
+      <p class="btn btn-light pulsanteOcchio" (click)="inputCheckPassword.type=inputCheckPassword.type=='password'?'text':'password'"
+            (click)="occhio2()">
+            <i class="fa-regular fa-eye-slash occhio2"></i></p>
     </div>
     <button type="submit" class="btn btn-primary mt-2" [ngClass]="{'disabled':form.invalid}">Registrati</button>
   </form>
+  <div id="erroreUsername" *ngIf="this.interruttore1"><p>Errore, username già in uso<p></div>
+  <div id="errorePassword" *ngIf="this.interruttore2"><p>Errore, controlla di aver reinserito correttamente la password<p></div>
+  <div id="erroreEmail" *ngIf="this.interruttore3"><p>Errore, email non valida<p></div>
 </section>
 <app-navbar></app-navbar>

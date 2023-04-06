@@ -54,7 +54,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.logout()
-			.logoutSuccessUrl("/app/page1")
 			.invalidateHttpSession(true)
 			.deleteCookies("JSESSIONID")
 			.and()

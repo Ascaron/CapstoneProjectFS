@@ -1,25 +1,34 @@
-<section class="filmtv">
-  <div class="card mx-auto mx-sm-3 my-3 d-sm-inline-block w-md-25 bg-primary" *ngFor="let filmtv of filmtvs"
-    style="width: 18rem;">
-    <img class="card-img-top" src={{filmtv?.immagine}} alt="Immagine Film">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">{{filmtv?.titolo}}</li>
-      <li class="list-group-item">{{filmtv?.attori}}</li>
-      <li class="list-group-item">{{filmtv?.regista}}</li>
-      <li class="list-group-item">{{filmtv?.casaProduzione}}</li>
-      <li class="list-group-item">{{filmtv?.formato}}</li>
-      <li class="list-group-item">{{filmtv?.durata}}min</li>
-      <li class="list-group-item">{{filmtv?.prezzo}}€</li>
-      <li class="list-group-item" *ngIf="token"><button id="aggiungiAlCarrello"
-          (click)="aggiungiAlCarrello(filmtv.codiceControllo)" class="btn btn-primary mt-2">
-          Aggiungi al carrello</button><button id="aggiungiAllaListaPreferiti"
-          (click)="aggiungiAllaListaPreferiti(filmtv.codiceControllo)" class="btn btn-primary mt-2">
-          Aggiungi ai preferiti</button><button id="rimuoviDalCarrello" *ngIf="checkCarrello(filmtv)"
-          (click)="aggiungiAlCarrello(filmtv.codiceControllo)" class="btn btn-success mt-2">
-          Nel carrello</button><button id="rimuoviDallaListaPreferiti"
-          (click)="checkCarrello(filmtv)" class="btn btn-success mt-2">
-          Preferito</button></li>
-    </ul>
-  </div>
-</section>
-<app-navbar></app-navbar>
+<div class="card mx-auto mx-md-3 my-3 d-md-inline-block w-md-25 bg-primary" *ngFor="let filmtv of filmtvs"
+  style="width: 18rem;">
+  <img class="card-img-top" src={{filmtv?.immagine}} alt="Immagine Film">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{filmtv?.titolo}}</li>
+    <li class="list-group-item">{{filmtv?.attori}}</li>
+    <li class="list-group-item">{{filmtv?.regista}}</li>
+    <li class="list-group-item">{{filmtv?.casaProduzione}}</li>
+    <li class="list-group-item">{{filmtv?.formato}}</li>
+    <li class="list-group-item">{{filmtv?.durata}}min</li>
+    <li class="list-group-item">{{filmtv?.prezzo}}€</li>
+    <li class="list-group-item" *ngIf="token">
+
+      <span *ngIf="filmtv.acquistabile"><button id="aggiungiAlCarrello" *ngIf="!filmtv.nelCarrello"
+        (click)="aggiungiAlCarrello(filmtv.codiceControllo)" (click)="ricaricaPagina()" class="btn btn-primary m-2">
+        Aggiungi <i class="fa-solid fa-cart-shopping"></i></button></span>
+
+        <button id="vaiAlCarrello" *ngIf="filmtv.nelCarrello" [routerLink]="['/carrello']"
+        class="btn btn-success m-2">
+        Nel carrello</button>
+
+        <span *ngIf="!filmtv.acquistabile">
+          <span *ngIf="!filmtv.nelCarrello">
+            <p class="p-2 bg-danger rounded text-white d-inline-block m-2">Esaurito <i class="fa-solid fa-xmark"></i></p></span></span>
+
+        <button id="aggiungiAllaListaPreferiti" *ngIf="!filmtv.nellaLista"
+        (click)="aggiungiAllaListaPreferiti(filmtv.codiceControllo)" (click)="ricaricaPagina()" class="btn btn-primary m-2">
+        Preferito <i class="fa-regular fa-circle"></i></button>
+
+        <button id="rimuoviDallaListaPreferiti" *ngIf="filmtv.nellaLista" (click)="rimuoviDallaListaPreferiti(filmtv.codiceControllo)"
+        (click)="ricaricaPagina()" class="btn btn-success m-2">
+        Preferito <i class="fa-regular fa-circle-check"></i></button></li>
+  </ul>
+</div>

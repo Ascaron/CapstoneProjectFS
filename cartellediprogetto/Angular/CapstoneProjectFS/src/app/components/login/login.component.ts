@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
       this.listaStringhe1=res;
       if(this.listaStringhe1.length==0){
         this.interruttore1=true;
+        this.interruttore2=false;
       }
       else{
         this.loginService.controlloCorrispondenzaPassword(this.ottieniValoreForm('inputUsername').value,

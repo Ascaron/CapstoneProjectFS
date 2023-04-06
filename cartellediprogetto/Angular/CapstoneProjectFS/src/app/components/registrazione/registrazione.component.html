@@ -45,8 +45,8 @@
     </div>
     <button type="submit" class="btn btn-primary mt-2" [ngClass]="{'disabled':form.invalid}">Registrati</button>
   </form>
-  <div id="erroreUsername" *ngIf="this.interruttore1"><p>Errore, username già in uso<p></div>
-  <div id="errorePassword" *ngIf="this.interruttore2"><p>Errore, controlla di aver reinserito correttamente la password<p></div>
-  <div id="erroreEmail" *ngIf="this.interruttore3"><p>Errore, email non valida<p></div>
+  <div *ngIf="this.interruttore1" class="fw-bold text-danger text-center"><p>Errore, username già in uso<p></div>
+  <div *ngIf="this.interruttore2" class="fw-bold text-danger text-center"><p>Errore, controlla di aver reinserito correttamente la password<p></div>
+  <div *ngIf="this.interruttore3" class="fw-bold text-danger text-center"><p>Errore, email non valida<p></div>
 </section>
 <app-navbar></app-navbar>

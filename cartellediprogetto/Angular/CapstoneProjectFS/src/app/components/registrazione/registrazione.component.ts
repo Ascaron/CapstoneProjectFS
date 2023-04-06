@@ -43,12 +43,15 @@ export class RegistrazioneComponent implements OnInit {
     this.modSe.controlloEsistenzaUsername(this.ottieniValoreForm('inputUsername').value, 0).subscribe((res)=>{
       this.listaStringhe=res;
       if(this.listaStringhe.length!=0){
-        this.interruttore1=true
+        this.interruttore1=true;
+        this.interruttore2=false;
+        this.interruttore3=false;
       }
       else{
         if(this.ottieniValoreForm('inputPassword').value!=this.ottieniValoreForm('inputCheckPassword').value){
           this.interruttore1=false;
           this.interruttore2=true;
+          this.interruttore3=false;
         }
         else{
           if(this.convalidaEmail(this.ottieniValoreForm('inputEmail').value)){
@@ -67,6 +70,7 @@ export class RegistrazioneComponent implements OnInit {
             }
           }
           else{
+            this.interruttore1=false;
             this.interruttore2=false;
             this.interruttore3=true;
           }

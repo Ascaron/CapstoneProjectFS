@@ -101,12 +101,15 @@ export class DatiUtenteComponent implements OnInit {
     this.modSe.controlloEsistenzaUsername(this.ottieniValoreForm1('inputUsername').value, this.idUtente).subscribe((res)=>{
       this.listaStringhe=res;
       if(this.listaStringhe.length!=0){
-        this.interruttore1=true
+        this.interruttore1=true;
+        this.interruttore2=false;
+        this.interruttore3=false;
       }
       else{
         if(this.ottieniValoreForm1('inputPassword').value!=this.ottieniValoreForm1('inputCheckPassword').value){
           this.interruttore1=false;
           this.interruttore2=true;
+          this.interruttore3=false;
         }
         else{
           if(this.convalidaEmail(this.ottieniValoreForm1('inputEmail').value)){
@@ -129,6 +132,7 @@ export class DatiUtenteComponent implements OnInit {
             }
           }
           else{
+            this.interruttore1=false;
             this.interruttore2=false;
             this.interruttore3=true;
           }
